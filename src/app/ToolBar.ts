@@ -9,7 +9,8 @@ import {
     ViewChild,
     ComponentFactoryResolver, 
     ViewContainerRef,
-    ElementRef
+    ElementRef,
+    Inject
 } from '@angular/core';
 
 import Base from './Base';
@@ -21,13 +22,12 @@ import Button from './Button';
     ...Base.componentProps
 })
 export default class ToolBar extends Base {
-    @ContentChildren(Base, { read: Base }) children: QueryList<Base>;
 
-	constructor(eRef:ElementRef,resolver:ComponentFactoryResolver,vcRef:ViewContainerRef) {
+	constructor(
+        eRef:ElementRef,
+        resolver:ComponentFactoryResolver,
+        vcRef:ViewContainerRef,
+    ) {
         super(eRef, resolver, vcRef);
-    }
-
-    ngAfterContentInit() {
-        console.log('children', this.children);
     }
 }

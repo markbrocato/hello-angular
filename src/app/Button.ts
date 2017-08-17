@@ -1,17 +1,18 @@
-import { 
-    Component, 
-    Input, 
-    SimpleChanges, 
-    forwardRef, 
-    ViewChildren, 
-    QueryList, 
-    ContentChildren, 
-    ViewChild,
-    ComponentFactoryResolver, 
-    ViewContainerRef,
-    ElementRef
+import {
+  Component,
+  Input,
+  SimpleChanges,
+  forwardRef,
+  ViewChildren,
+  QueryList,
+  ContentChildren,
+  ViewChild,
+  ComponentFactoryResolver,
+  ViewContainerRef,
+  ElementRef,
+  Inject
 } from '@angular/core';
-  
+
 import Base from './Base';
 
 @Component({
@@ -20,7 +21,11 @@ import Base from './Base';
   ...Base.componentProps
 })
 export default class Button extends Base {
-  	constructor(eRef:ElementRef, resolver:ComponentFactoryResolver, vcRef:ViewContainerRef) {
-        super(eRef, resolver, vcRef);
-    }
+  constructor(
+    eRef: ElementRef,
+    resolver: ComponentFactoryResolver,
+    vcRef: ViewContainerRef,
+  ) {
+    super(eRef, resolver, vcRef);
+  }
 }

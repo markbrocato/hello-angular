@@ -10,9 +10,15 @@ import {
     ComponentFactoryResolver,
     ViewContainerRef,
     ElementRef,
-    OnInit
+    OnInit,
+    OnDestroy,
+    Inject
 } from '@angular/core';
 
+@Component({
+    selector: 'x-component',
+    ...Base.componentProps
+})
 export default class Base implements OnInit {
 
     static componentProps = {
@@ -22,15 +28,20 @@ export default class Base implements OnInit {
     }
 
     @ViewChild('dynamic') dynamic;
+    @ContentChildren(Base) children: QueryList<Base>;
+    @Input() text:string
+
+    cmp: any;
 
 	constructor(
 		private myElement: ElementRef, 
 		private componentFactoryResolver: ComponentFactoryResolver, 
-		private viewContainerRef: ViewContainerRef, 
+        private viewContainerRef: ViewContainerRef
     ) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        // console.log('changes', changes);
         // debugger;
     }
 
@@ -38,12 +49,44 @@ export default class Base implements OnInit {
         // console.log('children', this.children);
     }
 
+    ngAfterContentInit() {
+        this.cmp = this.createExtJSComponent();
+
+        if (this.myElement.nativeElement.parentNode) {
+            this.myElement.nativeElement.appendChild(this.cmp);
+        } 
+
+        for (let child of this.children.toArray()) {
+            if (child !== this) {
+                this.cmp.appendChild(child.cmp);
+            }
+        }
+    }
+
     ngOnInit() {
-        console.log(this.constructor.name, this.dynamic);
-        let cmp = document.createElement('div');
-        cmp.innerHTML = this.constructor.name;
-        this.componentFactoryResolver.resolveComponentFactory
-        // this.myElement.nativeElement.appendChild(cmp);
+    }
+
+    ngAfterContentChecked() {
+        for (let child of this.children.toArray()) {
+            if (child !== this) {
+                console.log('append', child.cmp);
+                this.cmp.appendChild(child.cmp);
+            }
+        }
+    }
+
+    ngOnDestroy() {
+        console.log('destroy', this.constructor.name);
+        this.cmp.parentNode.removeChild(this.cmp);
+    }
+
+    createExtJSComponent() {
+        let cmp = document.createElement('fieldset');
+        let legend = document.createElement('legend');
+        legend.innerHTML = this.constructor.name;
+        cmp.innerHTML = this.text;
+        cmp.appendChild(legend);
+        return cmp;
     }
 
 }

@@ -5,12 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import ToolBar from './ToolBar';
 import Button from './Button';
+import Base from './Base';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToolBar,
-    Button
+    Button,
+    Base
   ],
   imports: [
     BrowserModule,

@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   myValue = "Mark";
+  showButton = true;
 }

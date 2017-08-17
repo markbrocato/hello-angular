@@ -1,8 +1,11 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div>
   <input [(ngModel)]="myValue" placeholder="myValue"/>
+
+  <label><input type="checkbox" [(ngModel)]="showButton"> showButton</label>
+
   <x-toolbar>
-    <x-toolbar></x-toolbar>
-    <!-- <x-button></x-button> -->
+    <x-button *ngIf="showButton" text="Toggle"></x-button> 
+    <x-button text="Static"></x-button>
   </x-toolbar>
 </div>
